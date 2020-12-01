@@ -28,10 +28,13 @@
 
 </head>
 <body id = "body">
-    
-    <label for="poke">Eliga pokemon 1</label>
 
-    <select name="poke" id="pokemons" onchange="renderImage('pokemons','imagen1');">
+  
+  {%for	y in range(0,6):%}
+    <label for="poke{{y}}">Eliga pokemon {%print(y+1)%} </label>
+
+    <select name="poke" id="pokemons{{y}}" onchange="renderImage('pokemons{{y}}','imagen{{y}}');">
+      <option value=" " selected disabled hidden>Select</option>
 
         {% for x in pokemons.keys()%}
 
@@ -40,13 +43,12 @@
       
       {% endfor %}
     </select>
-
     
-
-<img id="imagen1"> 
-
+<img id='imagen{{y}}'> 
 <br>
 
+{% endfor %}
+<!-- 
     <label for="poke2">Eliga pokemon 2</label>
 
     <select name="poke2" id="pokemons2"  onchange="renderImage('pokemons2','imagen2');" >
@@ -122,7 +124,7 @@
       {% endfor %}
     </select>
 
-    <img id="imagen6"> 
+    <img id="imagen6">  -->
 
 </body>
 </html>
