@@ -20,36 +20,51 @@ def redirect_home():
 def anadir():
 	
 	imagenes = {}
-	for x in range(1,4):
+	for x in range(1,7):
 
 		respuesta = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{x}/")
 
 		dato = json.loads(respuesta.content)
 		imagenes[x] = dato
 		print(x)
+	
 	if request.method == "POST":
 		try:
-			datos = {
-
 			
+			nombre = request.form["user_name"].replace(' ','_')
+			
+			datos = {
 			"poke_id0" : request.form["poke0"],
 			"poke_id1" : request.form["poke1"],
 			"poke_id2" : request.form["poke2"],
 			"poke_id3" : request.form["poke3"],
 			"poke_id4" : request.form["poke4"],
 			"poke_id5" : request.form["poke5"],
-			"user_name" : request.form["user_name"]
+			"user_name" : nombre
 			}
 			
-			print("Que onda con esto")
 			url = 'https://maketeam.herokuapp.com/MissingNo151/new_team/'
 			api.post(url,json = datos)
 
 			if '' in form.values():
 				return render_template("añadir.html", pokemons = imagenes)
 
-		
+			
 
+			variable0 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{poke_id0}/").json()
+			variable1 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id1+"/").json()
+			variable2 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id2+"/").json()
+			variable3 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id3+"/").json()
+			variable4 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id4+"/").json()
+			variable5 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id5+"/").json()
+
+			print(variable0["pokemon"]["name"])
+			print(variable1["pokemon"]["name"])
+			print(variable2["pokemon"]["name"])
+			print(variable3["pokemon"]["name"])
+			print(variable4["pokemon"]["name"])
+			print(variable5["pokemon"]["name"])
+			print("usr name "+user_name)
 			return  redirect("/success")
 		except:
 			return  render_template("añadir.html",pokemons = imagenes)
@@ -65,7 +80,7 @@ def index():
 
 	return render_template("index.html", info = dato)
 
-@app.route('/delete', methods = ['PUT','DELETE'])
+@app.route('/delete', methods = ['GET','PUT','DELETE'])
 def eliminar():
     return render_template("eliminar.html")
 
@@ -94,30 +109,16 @@ def actualizar():
 	else:
 	    return render_template("actualizar.html")
 
-@app.route('/login')
-def inicio_sesion():
-    return render_template("iniciosesion.html")
-
-@app.route('/signup')
-def registro():
-    return render_template("registro.html")
-
-@app.route('/settings')
-def configurar():
-    return render_template("configurar.html")
-
-@app.route('/profile')
-def perfil():
-    return render_template("perfil.html")
-
 @app.route('/success')
 def success():
 	return render_template("exito.html")
 	
 @app.route('/fail')
 def fail():
-    return cosa()
+    return render_template('fallo.html')
 
 
 if __name__ == "__main__":
 	app.run(debug=True,port=8080)
+
+
