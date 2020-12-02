@@ -17,7 +17,7 @@ def redirect_home():
 @app.route("/add", methods = ["GET","POST"])
 def anadir():
 	imagenes = {}
-	for x in range(1,7):
+	for x in range(1,50):
 
 		respuesta = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{x}/")
 
