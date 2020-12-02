@@ -9,6 +9,11 @@
     <title>Api de pokemon</title>
   </head>
 
+  <style>
+    .card{
+      margin-bottom: 10px;
+    }
+  </style>
   <body background="https://raw.githubusercontent.com/Aplicaciones-WEB-4/pagina-pokemon/master/templates/imagenes/pokemonimage2.png">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
@@ -42,13 +47,29 @@
     <br>
 
     <div class="container d-flex align-items-center flex-wrap justify-content-between">
-      <div class="card" style="width: 18rem;">
-        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-        <div class="card-body">
-          <h5 class="card-title">LO QUE IRÁ AQUÍ</h5>
-          <a href="/login" class="btn btn-primary">Perfil</a>
-        </div>
-      </div>
+      
+
+{%for x in info%}
+      
+<div class="card" style="width: 18rem;">
+  <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+  <div class="card-body">
+    <h5 class="card-title">{{x['user_name']}}</h5>
+    <a href="/login" class="btn btn-primary">Perfil</a>
+
+    <br>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id0']}}.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id1']}}.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id2']}}.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id3']}}.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id4']}}.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id5']}}.png" alt="">
+  </div>
+  
+</div>
+
+{% endfor %}
+
     </div>
   </body>
 </html>

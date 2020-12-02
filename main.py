@@ -19,15 +19,15 @@ def redirect_home():
 
 @app.route("/add", methods = ["GET","POST"])
 def anadir():
-	if request.method == "GET":
-		imagenes = {}
-		for x in range(1,11):
+	
+	imagenes = {}
+	for x in range(1,11):
 
-			respuesta = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{x}/")
+		respuesta = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{x}/")
 
-			dato = json.loads(respuesta.content)
-			imagenes[x] = dato
-			print(x)
+		dato = json.loads(respuesta.content)
+		imagenes[x] = dato
+		print(x)
 	if request.method == "POST":
 		try:
 
@@ -74,17 +74,43 @@ def anadir():
 		
 	return render_template("añadir.html", pokemons = imagenes)
 
-@app.route('/home')
+@app.route('/home',methods = ["GET"])
 def index():
-    return render_template("index.html")
+	respuesta = api.get("https://maketeam.herokuapp.com/all_teams")
+	dato = json.loads(respuesta.content)
+	for	x in dato:
+		print(x['user_name'])
+
+	return render_template("index.html", info = dato)
 
 @app.route('/delete')
 def eliminar():
     return render_template("eliminar.html")
 
-@app.route('/update')
+@app.route('/update', methods = ['GET','PUT','POST'])
 def actualizar():
-    return render_template("actualizar.html")
+	if request.method == "POST":
+		nuevos_datos = {
+			
+			"poke_id0" :  request.form["pokemon1"],
+			"poke_id1" :  request.form["pokemon2"],
+			"poke_id2" :  request.form["pokemon3"],
+			"poke_id3" :  request.form["pokemon4"],
+			"poke_id4" :  request.form["pokemon5"],
+			"poke_id5" :  request.form["pokemon6"],
+			"user_name" :  request.form["nombreN"]
+		}
+		nombre = request.form["nombre"]
+		if request.form['clave'] != 'MissingNo151':
+			return render_template("index.html")
+		else:
+			url = f'https://maketeam.herokuapp.com/MissingNo151/MakeTeams/update/{nombre}'
+			api.put(url,json = nuevos_datos)
+			return render_template("index.html")
+
+		
+	else:
+	    return render_template("actualizar.html")
 
 @app.route('/login')
 def inicio_sesion():
