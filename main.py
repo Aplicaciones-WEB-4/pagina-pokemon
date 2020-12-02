@@ -48,21 +48,7 @@ def anadir():
 			if '' in form.values():
 				return render_template("añadir.html", pokemons = imagenes)
 
-			print("usr name "+user_name)
-
-			variable0 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{poke_id0}/").json()
-			variable1 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id1+"/").json()
-			variable2 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id2+"/").json()
-			variable3 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id3+"/").json()
-			variable4 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id4+"/").json()
-			variable5 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id5+"/").json()
-
-			print(variable0["pokemon"]["name"])
-			print(variable1["pokemon"]["name"])
-			print(variable2["pokemon"]["name"])
-			print(variable3["pokemon"]["name"])
-			print(variable4["pokemon"]["name"])
-			print(variable5["pokemon"]["name"])
+		
 
 			return  redirect("/success")
 		except:
