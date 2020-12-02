@@ -4,7 +4,6 @@ import json
 import os
 import json
 import time
-import db_config as db
 from bson.json_util import dumps
 
 
@@ -21,7 +20,7 @@ def redirect_home():
 def anadir():
 	
 	imagenes = {}
-	for x in range(1,11):
+	for x in range(1,4):
 
 		respuesta = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{x}/")
 
@@ -30,24 +29,21 @@ def anadir():
 		print(x)
 	if request.method == "POST":
 		try:
+			datos = {
 
-			poke_id0 = request.form["poke0"]
-			poke_id1 = request.form["poke1"]
-			poke_id2 = request.form["poke2"]
-			poke_id3 = request.form["poke3"]
-			poke_id4 = request.form["poke4"]
-			poke_id5 = request.form["poke5"]
-			user_name = request.form["user_name"]
-
-			db.db.MakeTeams.insert_one ( {
-				"poke_id0" : poke_id0,
-				"poke_id1" : poke_id1,
-				"poke_id2" : poke_id2,
-				"poke_id3" : poke_id3,
-				"poke_id4" : poke_id4,
-				"poke_id5" : poke_id5,
-				"user_name" : user_name
-			})
+			
+			"poke_id0" : request.form["poke0"],
+			"poke_id1" : request.form["poke1"],
+			"poke_id2" : request.form["poke2"],
+			"poke_id3" : request.form["poke3"],
+			"poke_id4" : request.form["poke4"],
+			"poke_id5" : request.form["poke5"],
+			"user_name" : request.form["user_name"]
+			}
+			
+			print("Que onda con esto")
+			url = 'https://maketeam.herokuapp.com/MissingNo151/new_team/'
+			api.post(url,json = datos)
 
 			if '' in form.values():
 				return render_template("añadir.html", pokemons = imagenes)
@@ -83,7 +79,7 @@ def index():
 
 	return render_template("index.html", info = dato)
 
-@app.route('/delete')
+@app.route('/delete', methods = ['PUT','DELETE'])
 def eliminar():
     return render_template("eliminar.html")
 
