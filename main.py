@@ -1,52 +1,114 @@
-from flask import Flask, redirect, render_template,url_for,request,jsonify
+from flask import Flask, redirect, render_template,url_for,request,flash
 import requests as api
-from app import create_app
 import json
+import os
+import json
+import time
 import db_config as db
 from bson.json_util import dumps
 
 
-app = create_app()
-# app = Flask(__name__)
+def clear(): os.system('clear')
+clear()
 
+app = Flask(__name__)
 
-@app.route('/test')
-def test():
-    return jsonify({
-        "message": "API working ok",
+@app.route('/')
+def redirect_home():
+	return redirect(url_for('.index'))
 
-    })
+@app.route("/add", methods = ["GET","POST"])
+def anadir():
+	if request.method == "GET":
+		imagenes = {}
+		for x in range(1,11):
 
+			respuesta = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{x}/")
 
-@app.route('/crear', methods = ['POST'])
-def test2():
-    db.db.MakeTeams.insert_one({
-    "Miembro1": request.json["Miembro1"],
-    "Miembro2": request.json["Miembro2"],
-	"Miembro3": request.json["Miembro3"],
-	"Miembro4": request.json["Miembro4"],
-	"Miembro5": request.json["Miembro5"],
-	"Miembro6": request.json["Miembro6"],
-	"Nombre_usuario": request.json["Nombre_usuario"]
-    })
-    return jsonify({
-        "message":"A new keyboard was added with success",
-        "status": 200,
-    })
+			dato = json.loads(respuesta.content)
+			imagenes[x] = dato
+			print(x)
+	if request.method == "POST":
+		try:
 
-@app.route("/hacer", methods = ["GET","POST"])
-def obtener():
-	imagenes = {}
-	for x in range(1,11):
+			poke_id0 = request.form["poke0"]
+			poke_id1 = request.form["poke1"]
+			poke_id2 = request.form["poke2"]
+			poke_id3 = request.form["poke3"]
+			poke_id4 = request.form["poke4"]
+			poke_id5 = request.form["poke5"]
+			user_name = request.form["user_name"]
 
-		respuesta = api.get(f"https://pokeapi.co/api/v2/Miembro-form/{x}/")
+			db.db.MakeTeams.insert_one ( {
+				"poke_id0" : poke_id0,
+				"poke_id1" : poke_id1,
+				"poke_id2" : poke_id2,
+				"poke_id3" : poke_id3,
+				"poke_id4" : poke_id4,
+				"poke_id5" : poke_id5,
+				"user_name" : user_name
+			})
 
+			if '' in form.values():
+				return render_template("añadir.html", pokemons = imagenes)
 
+			print("usr name "+user_name)
 
-		dato = json.loads(respuesta.content)
-		imagenes[x] = dato
-		print(x)
-	return render_template("makeTeam.html", Miembros = imagenes)
+			variable0 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/{poke_id0}/").json()
+			variable1 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id1+"/").json()
+			variable2 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id2+"/").json()
+			variable3 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id3+"/").json()
+			variable4 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id4+"/").json()
+			variable5 = api.get(f"https://pokeapi.co/api/v2/pokemon-form/"+poke_id5+"/").json()
+
+			print(variable0["pokemon"]["name"])
+			print(variable1["pokemon"]["name"])
+			print(variable2["pokemon"]["name"])
+			print(variable3["pokemon"]["name"])
+			print(variable4["pokemon"]["name"])
+			print(variable5["pokemon"]["name"])
+
+			return  redirect("/success")
+		except:
+			return  render_template("añadir.html",pokemons = imagenes)
+		
+	return render_template("añadir.html", pokemons = imagenes)
+
+@app.route('/home')
+def index():
+    return render_template("index.html")
+
+@app.route('/delete')
+def eliminar():
+    return render_template("eliminar.html")
+
+@app.route('/update')
+def actualizar():
+    return render_template("actualizar.html")
+
+@app.route('/login')
+def inicio_sesion():
+    return render_template("iniciosesion.html")
+
+@app.route('/signup')
+def registro():
+    return render_template("registro.html")
+
+@app.route('/settings')
+def configurar():
+    return render_template("configurar.html")
+
+@app.route('/profile')
+def perfil():
+    return render_template("perfil.html")
+
+@app.route('/success')
+def success():
+	return render_template("exito.html")
+	
+@app.route('/fail')
+def fail():
+    return cosa()
 
 
 if __name__ == "__main__":
