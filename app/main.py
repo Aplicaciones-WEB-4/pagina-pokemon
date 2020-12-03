@@ -30,7 +30,7 @@ def anadir():
 	
 	if request.method == "POST":
 		try:
-			
+	    
 			nombre = request.form["user_name"].replace(' ','_')
 			
 			datos = {
