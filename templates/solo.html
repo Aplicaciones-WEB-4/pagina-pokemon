@@ -41,10 +41,7 @@
           </li>
           
         </ul>
-        <form class="form-inline my-2 my-lg-0" method="POST">
-          <input class="form-control mr-sm-2" type="search" placeholder="Buscar usuario" aria-label="Buscar usuario" name="nombre">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
+
       </div>
   </nav>
 
@@ -55,28 +52,28 @@
 
 <div class="container d-flex align-items-center flex-wrap justify-content-around">      
 
-{%for x in info%}
+
 
 <div class="card d-flex justify-content-center" style="width: 15rem; margin: 1rem 3rem;">
   
   <div class="card-body bg-dark " >
     
     <div class="d-flex justify-content-center" style="height: auto;">
-      <p class="btn btn-primary">{{x['user_name']}}</p>
+      <p class="btn btn-primary">{{info['user_name']}}</p>
     </div>
 
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id0']}}.png" alt="">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id1']}}.png" alt="">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id2']}}.png" alt="">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id3']}}.png" alt="">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id4']}}.png" alt="">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{x['poke_id5']}}.png" alt="">    
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{info['poke_id0']}}.png" alt="">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{info['poke_id1']}}.png" alt="">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{info['poke_id2']}}.png" alt="">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{info['poke_id3']}}.png" alt="">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{info['poke_id4']}}.png" alt="">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{info['poke_id5']}}.png" alt="">    
     
   </div>
   
 </div>
 
-{% endfor %}
+
 
 </div>
 
