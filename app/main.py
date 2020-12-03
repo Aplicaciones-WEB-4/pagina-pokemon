@@ -1,3 +1,4 @@
+""" Se importan los módulos, que en caso de requerirse se instalan en el entorno virtual de python """
 from flask import Flask, redirect, render_template,url_for,request,flash
 import requests as api
 import json
@@ -6,7 +7,7 @@ import json
 import time
 from bson.json_util import dumps
 
-
+""" Esta función esta al inicio del programa para que limpie la consola """
 def clear(): os.system('clear')
 clear()
 
